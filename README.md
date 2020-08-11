@@ -31,7 +31,7 @@ This gem includes formatters that can be used with the logger to get JSON output
 
 This is a JSON formatter that supports tagged logging.
 ```ruby
-config.logger.formatter = JsonFormatter.new
+config.logger.formatter = FluentLoggerRails::JsonFormatter.new
 config.logger.formatter.datetime_format = '%Y-%m-%d %H:%M:%S.%3N%z'
 config.logger.formatter.parent_key = 'payload'
 ```
@@ -40,7 +40,7 @@ config.logger.formatter.parent_key = 'payload'
 
 Similar JSON string logger (format is NOT actual JSON) that supports tagged logging and is useful for development or debugging.
 ```ruby
-config.logger.formatter = PrettyJsonFormatter.new
+config.logger.formatter = FluentLoggerRails::PrettyJsonFormatter.new
 ```
 
 ### Standard Rails Tagged Logger
