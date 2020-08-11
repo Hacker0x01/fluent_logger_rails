@@ -25,5 +25,16 @@ module FluentLoggerRails
     def close
       @logger.close
     end
+
+    delegate :add_tags, :remove_tags, :clear_tags!, to: :formatter
+
+    def tagged(*tags)
+      formatter.tagged(*tags) { yield self }
+    end
+
+    def flush
+      clear_tags!
+      super if defined?(super)
+    end
   end
 end
