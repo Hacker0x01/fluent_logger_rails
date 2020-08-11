@@ -29,26 +29,45 @@ RSpec.describe FluentLoggerRails::Logger do
   end
   let(:fluent_logger) { MockFluentLogger.new }
 
-  context 'log_level' do
-    before do
-      logger.formatter = ActiveSupport::Logger::SimpleFormatter.new
-      logger.formatter.datetime_format = '%Y-%m-%d %H:%M:%S.%3N%z'
+  context 'with a rails default tagged logger format' do
+    subject(:logger) do
+      ActiveSupport::TaggedLogging.new(
+        FluentLoggerRails::Logger.new(fluent_logger, path: 'test.rails', level: :info)
+      )
     end
 
-    it 'logs a thing' do
-      logger.info 'hello world'
-      expect(fluent_logger.logs).to match [['test.rails', "hello world\n"]]
+    describe '#tagged' do
+      context 'with strings' do
+        it 'attaches the key/value tag to the output' do
+          logger.tagged('1234', '127.0.0.1') do
+            logger.info('This is a cool request tagged with strings')
+          end
+
+          expect(fluent_logger.logs[0][1]).to eq(
+            "[1234] [127.0.0.1] This is a cool request tagged with strings\n"
+          )
+        end
+      end
     end
 
-    context 'when the log level is too low' do
-      it 'logs a thing' do
-        logger.debug 'hello world'
-        expect(fluent_logger.logs).to be_empty
+    context 'with the log level' do
+      context 'that is higher than the configured level' do
+        it 'logs a thing' do
+          logger.info 'hello world'
+          expect(fluent_logger.logs).to match [['test.rails', "hello world\n"]]
+        end
+      end
+
+      context 'when the log level is too low' do
+        it 'logs a thing' do
+          logger.debug 'hello world'
+          expect(fluent_logger.logs).to be_empty
+        end
       end
     end
   end
 
-  context 'with a json formatter' do
+  context 'with a json format' do
     before do
       logger.formatter = JsonFormatter.new
       logger.formatter.datetime_format = '%Y-%m-%d %H:%M:%S.%3N%z'
@@ -133,6 +152,28 @@ RSpec.describe FluentLoggerRails::Logger do
               'tags': %w[1234 127.0.0.1],
             }.to_json
           )
+        end
+      end
+    end
+
+    context 'with the log level' do
+      context 'that is higher than the configured level' do
+        it 'logs a thing' do
+          logger.info 'hello world'
+          expect(fluent_logger.logs).to match [['test.rails',
+            {
+              'severity': 'INFO',
+              'timestamp':'2019-01-08 14:51:39.701-0800',
+              'message':'hello world'
+            }.to_json
+          ]]
+        end
+      end
+
+      context 'when the log level is too low' do
+        it 'logs a thing' do
+          logger.debug 'hello world'
+          expect(fluent_logger.logs).to be_empty
         end
       end
     end
