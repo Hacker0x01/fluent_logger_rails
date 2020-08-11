@@ -17,7 +17,6 @@ module FluentLoggerRails
       return true if message.blank?
 
       message = format_message(severity, Time.now, progname, message)
-      message = { message: message } unless message.is_a? Hash
 
       @logger.post(@path, message)
       true

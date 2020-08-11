@@ -1,20 +1,27 @@
 # frozen_string_literal: true
 
-class HashFormatter
+class HashFormatter < ::Logger::Formatter
+  attr_accessor :parent_key
+
   def call(severity, timestamp, _progname, msg)
-    severity_display = if severity.blank?
+    payload = {
+      severity: format_severity(severity),
+      timestamp: format_datetime(timestamp),
+      message: msg.is_a?(String) ? msg.strip : msg,
+    }.merge(compact_tags)
+
+    # This ensures that if the logger is providing other top level keys,
+    @parent_key ? { @parent_key => payload } : payload
+  end
+
+  def format_severity(severity)
+    if severity.blank?
       'ANY'
     elsif severity.is_a? Integer
       ActiveSupport::Logger::SEV_LABEL[severity]
     else
       severity
     end
-
-    {
-      severity: severity_display,
-      timestamp: timestamp.in_time_zone.strftime('%Y-%m-%d %H:%M:%S.%3N%z'),
-      message: msg.is_a?(String) ? msg.strip : msg,
-    }.merge(compact_tags)
   end
 
   def tagged(*tags)
