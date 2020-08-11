@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class HashFormatter < ::Logger::Formatter
+  # Parent key - ensures that if the log is being merged into a higher level payload this key can
+  # be set in order to not conflict or be overridden.
   attr_accessor :parent_key
 
   def call(severity, timestamp, _progname, msg)
@@ -10,7 +12,6 @@ class HashFormatter < ::Logger::Formatter
       message: msg.is_a?(String) ? msg.strip : msg,
     }.merge(compact_tags)
 
-    # This ensures that if the logger is providing other top level keys,
     @parent_key ? { @parent_key => payload } : payload
   end
 
