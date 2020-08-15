@@ -20,6 +20,8 @@ Rails.application.configure do
     ),
     level: config.log_level
   )
+  # if you are using tagged logging, you need a formatter that supports it
+  config.logger.formatter = FluentLoggerRails::TaggedHashFormatter.new
 end
 ```
 
@@ -27,32 +29,25 @@ end
 
 This gem includes formatters that can be used with the logger to get JSON output that also supports [Rails tagged logging](https://api.rubyonrails.org/classes/ActiveSupport/TaggedLogging.html).
 
-### JSON
+### Hash aka JSON logger formatter
 
 This is a JSON formatter that supports tagged logging.
 ```ruby
-config.logger.formatter = FluentLoggerRails::JsonFormatter.new
+config.logger.formatter = FluentLoggerRails::TaggedHashFormatter.new
 config.logger.formatter.datetime_format = '%Y-%m-%d %H:%M:%S.%3N%z'
 config.logger.formatter.parent_key = 'payload'
 ```
 
-### Pretty JSON
+### Standard Rails Tagged Logger aka default logger format
 
-Similar JSON string logger (format is NOT actual JSON) that supports tagged logging and is useful for development or debugging.
-```ruby
-config.logger.formatter = FluentLoggerRails::PrettyJsonFormatter.new
-```
-
-### Standard Rails Tagged Logger
-
-The standard Rails tagged logger works as well.
+The standard Rails tagged logger works as well for standard output.
 ```ruby
 ActiveSupport::TaggedLogging.new(config.logger)
 ```
 
 # Examples
 
-## Simple JSON Tagged Logging
+## Hash formatter with tagged Logging
 ```ruby
 Rails.logger.tagged(user.id) do
   Rails.logger.warn('UserUpdateJob failed')
@@ -69,11 +64,11 @@ end
 # }
 ```
 
-## JSON Tagged Logging
+## Hash formatter with hash tagged Logging
 
 ```ruby
 Rails.logger.tagged(user_id: user.id, session_id: user_session.id) do
-  Rails.logger.info('UserUpdateJob failed', args: args)
+  Rails.logger.info(message: 'UserUpdateJob failed', args: args)
 end
 
 #
@@ -90,7 +85,8 @@ end
 #   "timestamp": "2019-01-08 14:51:39.701-0800", 
 # }
 ```
-## ActiveSupport Tagged Logging
+
+## Standard Rails formatter with tagged Logger
 
 ```ruby
 Rails.logger.tagged(user.id, user_session.id) do
