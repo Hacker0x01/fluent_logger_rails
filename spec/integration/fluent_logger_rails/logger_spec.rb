@@ -67,9 +67,9 @@ RSpec.describe FluentLoggerRails::Logger do
     end
   end
 
-  context 'with a json format' do
+  context 'with a hash format' do
     before do
-      logger.formatter = JsonFormatter.new
+      logger.formatter = FluentLoggerRails::TaggedHashFormatter.new
       logger.formatter.datetime_format = '%Y-%m-%d %H:%M:%S.%3N%z'
     end
 
@@ -83,7 +83,7 @@ RSpec.describe FluentLoggerRails::Logger do
               'severity': 'INFO',
               'timestamp': '2019-01-08 14:51:39.701-0800',
               'message': 'Hello World!',
-            }.to_json,
+            },
           )
         end
       end
@@ -99,7 +99,7 @@ RSpec.describe FluentLoggerRails::Logger do
                 'message': {
                   user_id: 1234
                 },
-            }.to_json,
+            },
           )
         end
       end
@@ -113,7 +113,7 @@ RSpec.describe FluentLoggerRails::Logger do
                 'severity': 'WARN',
                 'timestamp': '2019-01-08 14:51:39.701-0800',
                 'message': 'OH NO!',
-            }.to_json,
+            },
           )
         end
       end
@@ -133,7 +133,7 @@ RSpec.describe FluentLoggerRails::Logger do
               'message': 'This is a cool request tagged with a hash',
               'request_id': '1234',
               'ip': '127.0.0.1',
-            }.to_json,
+            },
           )
         end
       end
@@ -141,16 +141,16 @@ RSpec.describe FluentLoggerRails::Logger do
       context 'with strings' do
         it 'attaches the key/value tag to the output' do
           logger.tagged('1234', '127.0.0.1') do
-            logger.info('This is a cool request tagged with strings')
+            logger.info('This is another cool request tagged with strings')
           end
 
           expect(fluent_logger.logs[0][1]).to eq(
             {
               'severity': 'INFO',
               'timestamp': '2019-01-08 14:51:39.701-0800',
-              'message': 'This is a cool request tagged with strings',
+              'message': 'This is another cool request tagged with strings',
               'tags': %w[1234 127.0.0.1],
-            }.to_json
+            }
           )
         end
       end
@@ -165,7 +165,7 @@ RSpec.describe FluentLoggerRails::Logger do
               'severity': 'INFO',
               'timestamp':'2019-01-08 14:51:39.701-0800',
               'message':'hello world'
-            }.to_json
+            }
           ]]
         end
       end

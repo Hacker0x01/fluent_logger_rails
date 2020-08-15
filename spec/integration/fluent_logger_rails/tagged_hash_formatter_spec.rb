@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 require 'spec_helper'
 
-RSpec.describe HashFormatter do
+RSpec.describe FluentLoggerRails::TaggedHashFormatter do
   around(:each) { |example| Time.use_zone('Pacific Time (US & Canada)') { example.run } }
   before { Timecop.freeze('2019-01-08 14:51:39.701-0800') }
   after { Timecop.return }
 
-  subject(:formatter) { HashFormatter.new }
+  subject(:formatter) { described_class.new }
 
   describe '#datetime_format' do
     before do

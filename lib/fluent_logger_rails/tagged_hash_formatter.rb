@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module FluentLoggerRails
-  class HashFormatter < ::Logger::Formatter
+  class TaggedHashFormatter < ::Logger::Formatter
     # Parent key - ensures that if the log is being merged into a higher level payload this key can
     # be set in order to not conflict or be overridden.
     attr_accessor :parent_key
@@ -11,7 +11,7 @@ module FluentLoggerRails
         severity: format_severity(severity),
         timestamp: format_datetime(timestamp),
         message: msg.is_a?(String) ? msg.strip : msg,
-      }.merge(compact_tags)
+      }.merge(compact_tags.deep_dup)
 
       @parent_key ? { @parent_key => payload } : payload
     end
