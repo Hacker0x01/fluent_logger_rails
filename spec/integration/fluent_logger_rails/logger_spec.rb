@@ -171,7 +171,7 @@ RSpec.describe FluentLoggerRails::Logger do
       end
 
       context 'when the log level is too low' do
-        it 'logs a thing' do
+        it 'does not log a thing' do
           logger.debug 'hello world'
           expect(fluent_logger.logs).to be_empty
         end
