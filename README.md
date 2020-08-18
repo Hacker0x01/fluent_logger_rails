@@ -1,6 +1,6 @@
 # Fluent Logger Rails
 
-This is a library that wraps the [fluent-logger gem](https://github.com/fluent/fluent-logger-ruby) and provides easy integration with your Rails application. This includes log formatters that support [Rails tagged logging](https://api.rubyonrails.org/classes/ActiveSupport/TaggedLogging.html) for JSON format that can be sent to Fluentd (or really any other logging backend).
+This is a library that wraps the [fluent-logger gem](https://github.com/fluent/fluent-logger-ruby) and provides easy integration with your Rails application. This includes a log formatter that supports [Rails tagged logging](https://api.rubyonrails.org/classes/ActiveSupport/TaggedLogging.html) so your output JSON format that can be sent to Fluentd (or really any other logging backend).
 
 # Installation
 
@@ -27,7 +27,7 @@ end
 
 ## Formatter Configuration
 
-This gem includes formatters that can be used with the logger to get JSON output that also supports [Rails tagged logging](https://api.rubyonrails.org/classes/ActiveSupport/TaggedLogging.html).
+This gem includes a formatter that supports [Rails tagged logging](https://api.rubyonrails.org/classes/ActiveSupport/TaggedLogging.html).
 
 ### Hash aka JSON logger formatter
 
@@ -102,3 +102,8 @@ end
 # How to test this locally
 
 You can setup Fluentd with ruby gems as described on [Fluentd docs](https://docs.fluentd.org/installation/install-by-gem). Once that is running, simply configure your environment with the example above and the logs should appear.
+
+# Related Projects
+
+ - https://github.com/fluent/fluent-logger-ruby
+ - https://github.com/actindi/act-fluent-logger-rails
