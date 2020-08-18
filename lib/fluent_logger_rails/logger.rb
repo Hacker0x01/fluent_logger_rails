@@ -16,8 +16,7 @@ module FluentLoggerRails
       message = (block_given? ? yield : progname) if message.blank?
       return true if message.blank?
 
-      message = format_message(severity, Time.now, progname, message)
-      message = { message: message } unless message.is_a? Hash
+      message = format_message(severity, Time.zone.now, progname, message)
 
       @logger.post(@path, message)
       true
@@ -25,6 +24,17 @@ module FluentLoggerRails
 
     def close
       @logger.close
+    end
+
+    delegate :add_tags, :remove_tags, :clear_tags!, to: :formatter
+
+    def tagged(*tags)
+      formatter.tagged(*tags) { yield self }
+    end
+
+    def flush
+      clear_tags!
+      super if defined?(super)
     end
   end
 end

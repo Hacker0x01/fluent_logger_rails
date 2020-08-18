@@ -5,8 +5,11 @@ Gem::Specification.new do |spec|
   spec.name        = 'fluent_logger_rails'
   spec.version     = FluentLoggerRails::VERSION
   spec.date        = '2020-07-14'
-  spec.summary     = "A wrapper for fluent-logger gem to support tagged logging"
-  spec.description = "A simple hello world gem"
+  spec.summary     = "A wrapper for fluent-logger gem with support for tagged logging"
+  spec.description = "This is a library that wraps the [fluent-logger gem](https://github.com/fluent/fluent-logger-ruby) "\
+    "and provides easy integration with your Rails application. This includes log formatters that support "\
+    "[Rails tagged logging](https://api.rubyonrails.org/classes/ActiveSupport/TaggedLogging.html) for JSON format "\
+    "that can be sent to Fluentd (or really any other logging backend)."
   spec.authors     = ["HackerOne Open Source", "Ben Willis"]
   spec.email       = ["opensource+fluent_logger_rails@hackerone.com", "ben@hackeroen.com"]
   spec.homepage      = "https://github.com/Hacker0x01/fluent_logger_rails"
