@@ -6,6 +6,12 @@ module FluentLoggerRails
     # be set in order to not conflict or be overridden.
     attr_accessor :parent_key
 
+    def initialize
+      super
+      # Override the Logger::Formatter default to a format that does not have a trailing space
+      @datetime_format = "%Y-%m-%dT%H:%M:%S.%6N"
+    end
+
     def call(severity, timestamp, _progname, msg)
       payload = {
         severity: format_severity(severity),

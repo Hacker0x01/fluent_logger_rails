@@ -28,7 +28,7 @@ RSpec.describe FluentLoggerRails::TaggedHashFormatter do
         payload: {
           severity: 'DEBUG',
           message: 'hi',
-          timestamp: '2019-01-08T14:51:39.700999 '
+          timestamp: '2019-01-08T14:51:39.700999'
         }
       )
     end
@@ -44,7 +44,7 @@ RSpec.describe FluentLoggerRails::TaggedHashFormatter do
           message: 'hi',
           port: '80',
           severity: 'DEBUG',
-          timestamp: '2019-01-08T14:51:39.700999 '
+          timestamp: '2019-01-08T14:51:39.700999'
         )
       end
     end
@@ -57,7 +57,7 @@ RSpec.describe FluentLoggerRails::TaggedHashFormatter do
           message: 'hi',
           tags: %w[127.0.0.1 80],
           severity: 'DEBUG',
-          timestamp: '2019-01-08T14:51:39.700999 '
+          timestamp: '2019-01-08T14:51:39.700999'
         )
       end
     end
