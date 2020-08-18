@@ -16,7 +16,7 @@ module FluentLoggerRails
       message = (block_given? ? yield : progname) if message.blank?
       return true if message.blank?
 
-      message = format_message(severity, Time.now, progname, message)
+      message = format_message(severity, Time.zone.now, progname, message)
 
       @logger.post(@path, message)
       true
