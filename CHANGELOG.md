@@ -8,9 +8,20 @@ Bug Fixes:
 
 Enhancements:
 
-* Add a rake task to walk through your table/columns and easily classify and create a migration from it
-* Add a migration generator
-* Module helper to include in migrations to add data classification smart comment 
+* None
+
+Deprecations:
+* None
+
+## v0.2.0
+
+Bug Fixes:
+
+* None
+
+Enhancements:
+
+* Refactoring interface, major breaking changes on format (#1) 
 
 Deprecations:
 * None
