@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
-  spec.add_dependency('activesupport', '~> 5.0')
+  spec.add_dependency('activesupport', '>= 5.0', '< 6.1')
 
   spec.add_development_dependency 'rspec', '~> 3.6'
   spec.add_development_dependency 'timecop'
