@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fluent_logger_rails (0.3.0)
+    fluent_logger_rails (0.3.1)
       activesupport (>= 5.0, < 6.1)
 
 GEM
@@ -38,9 +38,9 @@ GEM
     rspec-support (3.9.3)
     thread_safe (0.3.6)
     timecop (0.9.1)
-    tzinfo (1.2.7)
+    tzinfo (1.2.8)
       thread_safe (~> 0.1)
-    zeitwerk (2.4.0)
+    zeitwerk (2.4.1)
 
 PLATFORMS
   ruby
