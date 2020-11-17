@@ -7,7 +7,7 @@ module FluentLoggerRails
       @level = SEV_LABEL.index(level.to_s.upcase)
       @path = path
       @logger = logger
-      after_initialize if respond_to? :after_initialize
+      after_initialize if respond_to?(:after_initialize) && ActiveSupport::VERSION::MAJOR < 6
     end
 
     def add(severity, message = nil, progname = nil)
