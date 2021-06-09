@@ -61,4 +61,18 @@ RSpec.describe FluentLoggerRails::TaggedHashFormatter, tz: 'Pacific Time (US & C
       end
     end
   end
+
+  describe '#merge_message_into_payload' do
+    subject(:formatter) { described_class.new(true) }
+
+    it 'formats the date' do
+      expect(formatter.call(0, Time.zone.now, nil, {'hello': 'world'})).to eq(
+        {
+          severity: 'DEBUG',
+          hello: 'world',
+          timestamp: '2019-01-08T14:51:39.701000'
+        }
+      )
+    end
+  end
 end
