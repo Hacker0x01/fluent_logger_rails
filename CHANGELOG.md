@@ -13,6 +13,20 @@ Enhancements:
 Deprecations:
 * None
 
+## v.0.5.0
+
+Bug Fixes:
+
+* None
+
+Enhancements:
+
+* Add option to allow message to be merged into payload (#8)
+
+Deprecations:
+
+* None
+
 ## v0.4.0
 
 Bug Fixes:
