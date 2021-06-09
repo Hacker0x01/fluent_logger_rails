@@ -6,18 +6,28 @@ module FluentLoggerRails
     # be set in order to not conflict or be overridden.
     attr_accessor :parent_key
 
-    def initialize
-      super
+    def initialize(merge_message_into_payload = false)
+      super()
+      @merge_message_into_payload = merge_message_into_payload
       # Override the Logger::Formatter default to a format that does not have a trailing space
       @datetime_format = "%Y-%m-%dT%H:%M:%S.%6N"
     end
 
     def call(severity, timestamp, _progname, msg)
-      payload = {
-        severity: format_severity(severity),
-        timestamp: format_datetime(timestamp),
-        message: msg.is_a?(String) ? msg.strip : msg,
-      }.merge(compact_tags.deep_dup)
+      payload = if msg.is_a?(Hash) && @merge_message_into_payload
+        msg
+      else
+        {
+          message: msg.is_a?(String) ? msg.strip : msg,
+        }
+      end
+
+      payload = payload.merge(
+        {
+          severity: format_severity(severity),
+          timestamp: format_datetime(timestamp),
+        },
+      ).merge(compact_tags.deep_dup)
 
       @parent_key ? { @parent_key => payload } : payload
     end
