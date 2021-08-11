@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
     "[Rails tagged logging](https://api.rubyonrails.org/classes/ActiveSupport/TaggedLogging.html) for JSON format "\
     "that can be sent to Fluentd (or really any other logging backend)."
   spec.authors     = ["HackerOne Open Source", "Ben Willis"]
-  spec.email       = ["opensource+fluent_logger_rails@hackerone.com", "ben@hackeroen.com"]
+  spec.email       = ["opensource+fluent_logger_rails@hackerone.com", "ben@hackerone.com"]
   spec.homepage      = "https://github.com/Hacker0x01/fluent_logger_rails"
 
   spec.license       = "MIT"
