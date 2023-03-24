@@ -13,6 +13,20 @@ Enhancements:
 Deprecations:
 * None
 
+## v0.6.0
+
+Bug Fixes:
+
+* None
+
+Enhancements:
+
+* Rails 7 support
+
+Deprecations:
+
+* None
+
 ## v.0.5.0
 
 Bug Fixes:
