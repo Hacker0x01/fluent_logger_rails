@@ -38,9 +38,9 @@ RSpec.describe FluentLoggerRails::TaggedHashFormatter, tz: 'Pacific Time (US & C
 
     context 'nil tag' do
       it 'does not attempt to process the tags' do
-        expect(formatter).not_to(receive(:remove_tags).with(anything))
+        expect_any_instance_of(described_class).not_to receive(:remove_tags)
 
-        formatter.tagged(tags) { expect(formatter.current_tags).to(eq({ tags: [] })) }
+        formatter.tagged(tags) { expect(formatter.current_tags).to eq({}) }
       end
     end
 
@@ -48,17 +48,19 @@ RSpec.describe FluentLoggerRails::TaggedHashFormatter, tz: 'Pacific Time (US & C
       let(:tags) { [nil] }
 
       it 'does not attempt to process the tags' do
-        expect(formatter).not_to(receive(:remove_tags).with(anything))
+        expect_any_instance_of(described_class).not_to receive(:remove_tags)
 
-        formatter.tagged([tags]) { expect(formatter.current_tags).to(eq({ tags: [] })) }
+        formatter.tagged([tags]) { expect(formatter.current_tags).to eq({}) }
       end
     end
 
     context 'with a string tag' do
       let(:tags) { 'tag' }
 
-      it 'adds the tag' do
-        formatter.tagged(tags) { expect(formatter.current_tags).to(eq({ tags: [tags] })) }
+      it 'adds and removes the tag' do
+        expect_any_instance_of(described_class).to receive(:remove_tags).with(tags)
+
+        formatter.tagged(tags) { expect(formatter.current_tags).to eq({ tags: [tags] }) }
       end
     end
 
@@ -66,9 +68,9 @@ RSpec.describe FluentLoggerRails::TaggedHashFormatter, tz: 'Pacific Time (US & C
       let(:tags) { { port: 80, host: '127.0.0.1' } }
 
       it 'adds the tags' do
-        formatter.tagged(**tags) do
-          expect(formatter.current_tags).to(eq(tags))
-        end
+        expect_any_instance_of(described_class).to receive(:remove_tags).with(tags)
+
+        formatter.tagged(**tags) { expect(formatter.current_tags).to eq(tags) }
       end
     end
   end
