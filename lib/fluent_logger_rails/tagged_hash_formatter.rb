@@ -45,11 +45,10 @@ module FluentLoggerRails
     def tagged(*tags)
       tags = tags.flatten.compact if tags.is_a?(Array)
 
-      add_tags(*tags) if tags
-
+      add_tags(*tags) if tags.present?
       yield(self)
     ensure
-      remove_tags(*tags) if tags
+      remove_tags(*tags) if tags.present?
     end
 
     def add_tags(*tags)
