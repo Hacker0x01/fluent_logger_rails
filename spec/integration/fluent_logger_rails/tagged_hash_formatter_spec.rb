@@ -33,6 +33,46 @@ RSpec.describe FluentLoggerRails::TaggedHashFormatter, tz: 'Pacific Time (US & C
     end
   end
 
+  describe '#tagged' do
+    let(:tags) { nil }
+
+    context 'nil tag' do
+      it 'does not attempt to process the tags' do
+        expect(formatter).not_to(receive(:remove_tags).with(anything))
+
+        formatter.tagged(tags) { expect(formatter.current_tags).to(eq({ tags: [] })) }
+      end
+    end
+
+    context 'with a nested array of nil tags' do
+      let(:tags) { [nil] }
+
+      it 'does not attempt to process the tags' do
+        expect(formatter).not_to(receive(:remove_tags).with(anything))
+
+        formatter.tagged([tags]) { expect(formatter.current_tags).to(eq({ tags: [] })) }
+      end
+    end
+
+    context 'with a string tag' do
+      let(:tags) { 'tag' }
+
+      it 'adds the tag' do
+        formatter.tagged(tags) { expect(formatter.current_tags).to(eq({ tags: [tags] })) }
+      end
+    end
+
+    context 'with a hash' do
+      let(:tags) { { port: 80, host: '127.0.0.1' } }
+
+      it 'adds the tags' do
+        formatter.tagged(**tags) do
+          expect(formatter.current_tags).to(eq(tags))
+        end
+      end
+    end
+  end
+
   describe '#add_tags' do
     context 'for a hash' do
       before { formatter.add_tags(host: '127.0.0.1', port: '80')}
