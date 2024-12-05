@@ -43,10 +43,13 @@ module FluentLoggerRails
     end
 
     def tagged(*tags)
-      add_tags(*tags)
-      yield self
+      tags = tags.flatten.compact if tags.is_a?(Array)
+
+      add_tags(*tags) if tags
+
+      yield(self)
     ensure
-      remove_tags(*tags)
+      remove_tags(*tags) if tags
     end
 
     def add_tags(*tags)
