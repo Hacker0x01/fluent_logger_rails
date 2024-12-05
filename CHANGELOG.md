@@ -4,7 +4,7 @@
 
 Bug Fixes:
 
-* None
+* Formatter is now more defensive about incoming nil and array-of-nil values, after changes with Rails 7.x Rack::Logger identified the gap
 
 Enhancements:
 
