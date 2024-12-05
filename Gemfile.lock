@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fluent_logger_rails (0.6.0)
+    fluent_logger_rails (0.7.0)
       activesupport (>= 5.0, < 8)
 
 GEM

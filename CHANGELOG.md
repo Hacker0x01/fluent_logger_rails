@@ -4,6 +4,20 @@
 
 Bug Fixes:
 
+* None
+
+Enhancements:
+
+* None
+
+Deprecations:
+
+* None
+
+## v0.7.0
+
+Bug Fixes:
+
 * Formatter is now more defensive about incoming nil and array-of-nil values, after changes with Rails 7.x Rack::Logger identified the gap
 
 Enhancements:
@@ -11,6 +25,7 @@ Enhancements:
 * None
 
 Deprecations:
+
 * None
 
 ## v0.6.0
