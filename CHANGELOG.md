@@ -14,6 +14,20 @@ Deprecations:
 
 * None
 
+## v0.8.0
+
+Bug Fixes:
+
+* None
+
+Enhancements:
+
+* Allow activesupport 8.x (Rails 8 support)
+
+Deprecations:
+
+* None
+
 ## v0.7.0
 
 Bug Fixes:
